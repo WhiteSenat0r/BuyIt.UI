@@ -5,7 +5,6 @@ import {User} from "../shared/models/user";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthStatus} from "../shared/models/auth-status";
-import {ApiResponse} from "../shared/models/api-response";
 
 @Injectable({
   providedIn: 'root'
