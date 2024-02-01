@@ -18,7 +18,7 @@ export class RegisterComponent {
     lastName: new FormControl('', [Validators.required,
       Validators.minLength(1), Validators.maxLength(64)]),
     phoneNumber: new FormControl('', [Validators.required,
-      Validators.pattern('((\\+38)?\\(?\\d{3}\\)?[\\s.-]?\\d{7}|\\d{3}[\\s.-]\\d{2}[\\s.-]\\d{2}|\\d{3}-\\d{4})')]),
+      Validators.pattern('((\\+380)?\\(?\\d{2}\\)?[\\s.-]?\\d{7}|\\d{3}[\\s.-]\\d{2}[\\s.-]\\d{2}|\\d{3}-\\d{4})')]),
     email: new FormControl('', [Validators.required,
       Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$')]),
     password: new FormControl('', Validators.required)
