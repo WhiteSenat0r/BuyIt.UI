@@ -1,3 +1,4 @@
+<app-register-success-modal></app-register-success-modal>
 <main class="min-h-[85vh] flex flex-row justify-center items-center mx-auto accent-neutral-800">
   <div class="max-sm:w-[90vw] w-[35rem] rounded-xl bg-white border p-2.5 max-lg:my-4">
     <div class="flex flex-row justify-start w-full max-sm:mb-4 mb-2 select-none" draggable="false">
@@ -12,7 +13,7 @@
         <app-text-input [formControl]="registrationForm.controls['email']" [label]="'Email'" [type]="'email'" class="my-1 sm:my-2 mx-2"></app-text-input>
         <app-text-input [formControl]="registrationForm.controls['password']" [label]="'Password'" [type]="'password'" class="my-1 sm:my-2 mx-2"></app-text-input>
       </div>
-      <div style="font-family: 'Open Sans', sans-serif;" *ngIf="responseMessage | async" class="mt-2 mb-3 mx-1 text-sm text-red-600 font-bold select-none sm:mx-2 sm:p-1.5" draggable="false">{{responseMessage.value}}</div>
+      <div style="font-family: 'Open Sans', sans-serif;" *ngIf="responseMessageSource | async" class="mt-2 mb-3 mx-1 text-sm text-red-600 font-bold select-none sm:mx-2 sm:p-1.5" draggable="false">{{responseMessageSource.value}}</div>
       <ul style="font-family: 'Open Sans', sans-serif;" *ngIf="errors | async" draggable="false">
         <li *ngFor="let error of errors.value" class="mt-2 mb-3 mx-1 text-sm text-red-600 font-bold select-none sm:mx-2 sm:p-1.5">{{error}}</li>
       </ul>
