@@ -21,10 +21,7 @@ export class BasketService {
   constructor(private http: HttpClient, private router: Router) { }
 
   getBasket(id: string) {
-    return this.http.get<ProductList<BasketItem>>(this.baseUrl + "Basket/?listid=" + id)
-      .subscribe({
-      next: basket => this.basketSource.next(basket)
-    });
+    return this.http.get<ProductList<BasketItem>>(this.baseUrl + "Basket/?listid=" + id);
   }
 
   setBasket(basket: ProductList<BasketItem>) {
