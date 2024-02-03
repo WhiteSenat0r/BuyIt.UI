@@ -4,6 +4,7 @@ import {AccountService} from "../account.service";
 import {Router} from "@angular/router";
 import {BasketService} from "../../../components/features/basket/basket.service";
 import {BehaviorSubject} from "rxjs";
+import {Guid} from "guid-typescript";
 
 @Component({
   selector: 'app-login',
@@ -35,8 +36,6 @@ export class LoginComponent {
       next: user =>{
         this.synchronizeUserBasket();
 
-        this.basketService.getBasket(localStorage.getItem('basketId')!);
-
         this.router.navigateByUrl('/');
       },
       error: err => {
@@ -48,13 +47,36 @@ export class LoginComponent {
   private synchronizeUserBasket() {
     this.accountService.currentUserSource$.subscribe({
       next: user => {
-        if (user) {
-          if (user.basketId !== null) {
-            localStorage.setItem('basketId', user.basketId)
-          }
-          else if (localStorage.getItem('basketId') !== null && user.basketId == null) {
-            this.basketService.synchronizeBasketWithUser().subscribe();
-          }
+        if (user && user.basketId !== null) {
+          localStorage.setItem('basketId', user.basketId);
+          this.basketService.getBasket(localStorage.getItem('basketId')!)
+            .subscribe({
+              next: value => {
+                this.basketService.basketSource.next(value);
+              }
+          });
+        }
+        else if (user && localStorage.getItem('basketId') !== null && user.basketId == null) {
+          this.basketService.synchronizeBasketWithUser().subscribe({
+            next: value => {
+              this.basketService.getBasket(localStorage.getItem('basketId')!)
+                .subscribe({
+                  next: value => {
+                    this.basketService.basketSource.next(value);
+                  }
+                });
+            }
+          });
+        }
+        else if (user && localStorage.getItem('basketId') == null && user.basketId == null) {
+          localStorage.setItem('basketId', Guid.create().toString())
+          this.basketService.getBasket(localStorage.getItem('basketId')!)
+            .subscribe({
+              next: value => {
+                this.basketService.basketSource.next(value);
+              },
+              complete: () => this.basketService.synchronizeBasketWithUser().subscribe()
+            });
         }
       }
     });
