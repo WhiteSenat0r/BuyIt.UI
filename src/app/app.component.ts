@@ -22,7 +22,11 @@ export class AppComponent implements OnInit {
     const storageBasketId = localStorage.getItem('basketId');
 
     if (storageBasketId !== null) {
-      this.basketService.getBasket(storageBasketId);
+      this.basketService.getBasket(storageBasketId).subscribe({
+        next: value => {
+          this.basketService.basketSource.next(value);
+        }
+      });
     }
   }
 }
