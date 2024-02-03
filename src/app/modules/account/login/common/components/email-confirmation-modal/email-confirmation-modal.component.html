@@ -1,0 +1,39 @@
+<div [@fadeInOutBg]="(loginService.emailConfirmationSource$ | async) ? 'open' : 'closed'"
+     *ngIf="(loginService.emailConfirmationSource$ | async)" draggable="false"
+     class="z-50 fixed overflow-hidden w-full h-[100vh] select-none flex justify-center items-center">
+  <div class="bg-black opacity-50 h-full w-full z-50 top-0 left-0 fixed" (click)="toggleModal()"></div>
+  <div [@fadeInOutWindow]="(loginService.emailConfirmationSource$ | async) ? 'open' : 'closed'"
+       *ngIf="(loginService.emailConfirmationSource$ | async)"
+       class="w-[95%] lg:w-[45%] bg-white rounded-xl z-50 overflow-y-auto p-2 fixed max-h-[98vh] -mt-[10rem]">
+    <div>
+      <div class="mt-1 mb-2 flex flex-row justify-between items-center px-2">
+        <div>
+          <h2 class="text-2xl font-bold">Email confirmation</h2>
+        </div>
+        <button (click)="toggleModal()" class="transition hover:scale-125 ease-out duration:500">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6">
+            <path d="M19 5L5 19M5 5L9.5 9.5M12 12L19 19" stroke-width="0.6" stroke="#000000"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="flex flex-row justify-center my-2">
+        <div class="border-t w-full mx-1"></div>
+      </div>
+    </div>
+    <div class="my-2">
+      <div class="flex flex-col justify-center items-center text-center whitespace-normal max-w-[30rem] sm:max-w-[35rem] md:max-w-[40rem]
+   lg:max-w-[62rem] xl:max-w-[78rem] min-[1361px]:max-w-[82rem] mx-auto px-3 break-words mt-2 select-none" draggable="false">
+        <div class="font-bold text-3xl lg:text-4xl max-w-full overflow-hidden mt-2 mb-5 py-2">
+          You have successfully confirmed your email address!
+        </div>
+        <div class="font-bold text-lg lg:text-xl max-w-full overflow-hidden my-2">
+          Congratulations and welcome to BuyIt! We're excited to have you on board and thank you
+          for choosing us. We're excited to inform you that you have successfully verified your email
+          address. Your registration process is complete and you are ready to go shopping at BuyIt!
+          We hope that our marketplace will be able to offer you everything what you need! Please log in
+          and you are ready to start. Happy purchases and enjoy your time at BuyIt!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
