@@ -40,10 +40,6 @@ export class AccountService {
       this.baseUrl + "User/VerifyEmail?verificationtoken=" + verificationToken + "&email=" + email, null);
   }
 
-  isExistingEmail(email: string) {
-    return this.http.get<boolean>(this.baseUrl + "User/EmailStatus?email=" + email);
-  }
-
   loadCurrentUser() {
     return this.http.get<User>(this.baseUrl + "User/CurrentUser", { withCredentials: true })
       .pipe(
