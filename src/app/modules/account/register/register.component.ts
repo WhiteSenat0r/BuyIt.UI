@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BehaviorSubject} from "rxjs";
-import {AccountService} from "../account.service";
+import {AccountService} from "../services/account.service";
 import {Router} from "@angular/router";
 import {RegisterService} from "./common/components/register.service";
+import {EmailService} from "../services/email.service";
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent {
   errors: BehaviorSubject<string[] | null> = new BehaviorSubject<string[] | null>(null);
 
   constructor(private accountService: AccountService, private router: Router,
-              public registerService: RegisterService) {
+              public registerService: RegisterService, private emailService: EmailService) {
     this.accountService.currentUserSource$.subscribe(
       {
         next: user => {
@@ -47,6 +48,8 @@ export class RegisterComponent {
     this.accountService.register(this.registrationForm.value).subscribe({
       next: user => {
         if (user) {
+          this.emailService.sendEmailConfirmationLetter(
+            this.registrationForm.controls['email'].value!).subscribe();
           this.registerService.registrationSource.next(true);
           this.registerService.emailSource.next(this.registrationForm.controls['email'].value);
         }

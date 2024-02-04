@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AccountService} from "../account.service";
+import {AccountService} from "../services/account.service";
 import {Router} from "@angular/router";
 import {BasketService} from "../../../components/features/basket/basket.service";
 import {BehaviorSubject} from "rxjs";
