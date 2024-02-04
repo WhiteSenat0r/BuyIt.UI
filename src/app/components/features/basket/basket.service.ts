@@ -6,8 +6,9 @@ import {BasketItem} from "../common/models/basket-item";
 import {HttpClient} from "@angular/common/http";
 import {GeneralizedProduct} from "../../../modules/shared/models/generalized-product";
 import {Product} from "../../../modules/shared/models/product";
-import {AccountService} from "../../../modules/account/account.service";
+import {AccountService} from "../../../modules/account/services/account.service";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../modules/account/services/authentication.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class BasketService {
     new BehaviorSubject<ProductList<BasketItem> | null>(null);
   private isAddedToBasketSources: Record<string, BehaviorSubject<boolean>> = {};
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   getBasket(id: string) {
     return this.http.get<ProductList<BasketItem>>(this.baseUrl + "Basket/?listid=" + id);
@@ -95,7 +96,7 @@ export class BasketService {
 
     const total = items.reduce((acc, item) => acc + item.quantity * item.price, 0);
 
-    return Number(total.toFixed(2));
+    return Number(total.toFixed(3));
   }
 
   synchronizeBasketWithUser() {
@@ -118,7 +119,8 @@ export class BasketService {
   private createNewBasket(): ProductList<BasketItem> {
     const basket = new ProductList<BasketItem>();
 
-    let accountService = new AccountService(this.http, this.router);
+    let accountService = new AccountService(
+      this.http, this.authService);
 
     accountService.currentUserSource$.subscribe({
       next: user => {
