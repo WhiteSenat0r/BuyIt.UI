@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BasketService} from "./components/features/basket/basket.service";
-import {AccountService} from "./modules/account/account.service";
+import {AccountService} from "./modules/account/services/account.service";
 
 
 @Component({
