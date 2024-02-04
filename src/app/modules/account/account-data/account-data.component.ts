@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AccountService} from "../account.service";
+import {AccountService} from "../services/account.service";
 import {BasketService} from "../../../components/features/basket/basket.service";
 import {Router} from "@angular/router";
 
