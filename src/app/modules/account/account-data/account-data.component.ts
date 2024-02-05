@@ -26,6 +26,7 @@ export class AccountDataComponent {
   logout() {
     localStorage.removeItem('basketId');
     this.basketService.basketSource.next(null);
+    this.basketService.isAddedToBasketSources = {};
 
     this.accountService.logout();
 
