@@ -17,9 +17,9 @@ export class BasketService {
   baseUrl: string = environment.apiUrl;
   basketSource: BehaviorSubject<ProductList<BasketItem>| null> =
     new BehaviorSubject<ProductList<BasketItem> | null>(null);
-  private isAddedToBasketSources: Record<string, BehaviorSubject<boolean>> = {};
+  isAddedToBasketSources: Record<string, BehaviorSubject<boolean>> = {};
 
-  constructor(private http: HttpClient, private authService: AuthenticationService) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService, private accountService: AccountService) { }
 
   getBasket(id: string) {
     return this.http.get<ProductList<BasketItem>>(this.baseUrl + "Basket/?listid=" + id);
@@ -119,12 +119,9 @@ export class BasketService {
   private createNewBasket(): ProductList<BasketItem> {
     const basket = new ProductList<BasketItem>();
 
-    let accountService = new AccountService(
-      this.http, this.authService);
-
-    accountService.currentUserSource$.subscribe({
+    this.accountService.currentUserSource$.subscribe({
       next: user => {
-        if (user) {
+        if (user && user.basketId) {
           basket.id = user!.basketId;
         }
       }
