@@ -47,16 +47,7 @@ export class LoginComponent {
   private synchronizeUserBasket() {
     this.accountService.currentUserSource$.subscribe({
       next: user => {
-        if (user && user.basketId !== null) {
-          localStorage.setItem('basketId', user.basketId);
-          this.basketService.getBasket(localStorage.getItem('basketId')!)
-            .subscribe({
-              next: value => {
-                this.basketService.basketSource.next(value);
-              }
-          });
-        }
-        else if (user && localStorage.getItem('basketId') !== null && user.basketId == null) {
+        if (user && localStorage.getItem('basketId') !== null && (user.basketId == null || user.basketId != null)) {
           this.basketService.synchronizeBasketWithUser().subscribe({
             next: value => {
               this.basketService.getBasket(localStorage.getItem('basketId')!)
@@ -66,6 +57,15 @@ export class LoginComponent {
                   }
                 });
             }
+          });
+        }
+        else if (user && localStorage.getItem('basketId') == null && user.basketId !== null) {
+          localStorage.setItem('basketId', user.basketId);
+          this.basketService.getBasket(localStorage.getItem('basketId')!)
+            .subscribe({
+              next: value => {
+                this.basketService.basketSource.next(value);
+              }
           });
         }
         else if (user && localStorage.getItem('basketId') == null && user.basketId == null) {
